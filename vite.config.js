@@ -8,7 +8,7 @@ export default defineConfig({
     template:{transformAssetUrls}
   }),
   quasar({
-    
+    sassVariables: 'src/themes/quasar-variables.css'
   })
 ],
   
