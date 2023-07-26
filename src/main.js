@@ -5,7 +5,7 @@ import './style.css'
 // import 'quasar/src/css/index.sass'
 import 'quasar/dist/quasar.css'
 import App from './App.vue'
-import router from './routes/router'
+import router from './routes/router.js'
 const app = createApp(App)
 app.use(Quasar,{
     plugins:{}
