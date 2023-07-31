@@ -6,19 +6,22 @@ const props = defineProps({
     columns: Array,
     rows: Array,
     tableStripe: Boolean,
-    loading:Boolean,
-    hidepaggination:Boolean,
-    rowPerPage:Number
-    
+    loading: Boolean,
+    hidepaggination: Boolean,
+    rowPerPage: Number
+
 });
 </script>
 
 <template>
     <q-table card-class="" :table-header-class="headerclasses" flat bordered :title="title" :rows="rows" :columns="columns"
-        row-key="name"  :class="{ 'table-stripe': tableStripe } "  :loading="loading" :hide-pagination="hidepaggination" :rows-per-page-options="[rowPerPage]">
+        row-key="name" :class="{ 'table-stripe': tableStripe }" :loading="loading" :hide-pagination="hidepaggination" 
+        :rows-per-page-options="rowPerPage">
         <template v-slot:loading>
-        <q-inner-loading showing color="primary" />
-      </template>
+            <q-inner-loading showing color="primary" />
+          
+        </template>
+        
     </q-table>
 </template>
 

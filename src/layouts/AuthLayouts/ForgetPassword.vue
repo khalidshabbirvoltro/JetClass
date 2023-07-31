@@ -10,7 +10,7 @@ import ForgetPassword from '../../components/AuthComponents/ForgetPassword.vue';
                     <div class=" q-pa-md flex column  text-center  ">
                          <div>
 
-                            <ForgetPassword/>
+                            <router-view/>
                          </div>
                         <div class="absolute-bottom q-mb-md  width-full ">
                             <img class="loginimgplan " :src="planeimg" alt="loginimg" width="520" />

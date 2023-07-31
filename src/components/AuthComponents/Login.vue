@@ -17,7 +17,7 @@ const isPwd = ref(true);
             <h5 class="q-ma-none q-mt-sm">community so we can grow together</h5>
         </div>
         <div class="q-my-md">
-            <p>Incorrect email/user-name or password </p>
+            <p class="text-deep-orange-14">Incorrect email/user-name or password </p>
         </div>
         <form @submit="login">
             <div class="q-mt-lg">

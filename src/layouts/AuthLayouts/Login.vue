@@ -11,7 +11,7 @@ import Login from '../../components/AuthComponents/Login.vue'
                     </div>
                     <div class="col-12 col-md-5 q-pa-lg bg-white overflow-hidden-y  relative-position"
                         style="height: 100vh;">
-                       <Login/>
+                       <router-view/>
                     </div>
                 </div>
             </q-page>

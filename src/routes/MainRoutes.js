@@ -1,11 +1,12 @@
 
 import Table from '../pages/Table.vue'
+import Test from '../pages/Test.vue'
 const MainRoutes=[
 
 
     {
         path:'/table',
-        name:'Table',
+        name:'Test',
         component:Table
     },
    
