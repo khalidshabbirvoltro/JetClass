@@ -1,5 +1,6 @@
 
 import Table from '../pages/Table.vue'
+import Test from '../pages/Test.vue'
 
 const MainRoutes=[
 
