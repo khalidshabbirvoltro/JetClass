@@ -1,152 +1,107 @@
+<script setup>
+import TableComponent from '../components/utils/FullTable.vue'
+import axios from 'axios'
+import { ref, reactive } from 'vue'
+const selectedRows = ref([])
+
+const columns = [
+
+  { name: 'name', label: 'Name', field: 'name', align: 'left' },
+  { name: 'age', label: 'Age', field: 'age', align: 'left' },
+  { name: 'email', label: 'Email', field: 'email', align: 'left' },
+  {
+    name: 'edit', // A custom identifier for the column
+    label: 'Edit',
+    align: 'center',
+    buttons: [
+      {
+        label: '',
+        icon: 'edit',
+        action: (row) => {
+          console.log('Edit clicked for row:', row.id);
+          // Add your edit logic here
+        },
+        class: 'bg-dark text-white',
+      },
+    ],
+  },
+  {
+    name: 'delete', // A custom identifier for the column
+    label: 'Delete',
+    align: 'center',
+    buttons: [
+      {
+        label: '',
+        icon: 'delete',
+
+        action: (row) => {
+          console.log('Delete clicked for row:', row);
+          // Add your delete logic here
+        },
+      },
+    ],
+
+  },
+
+
+
+]
+
+const dogs = ref([])
+let loading = false;
+const pagination = reactive({
+  page: 1,
+  rowsPerPage: 10,
+  rowsNumber: 1
+})
+const fetchDogs = (page = 0, limit = 10) => {
+
+  loading = true;
+  return axios.get('https://table.quasarcomponents.com/dogs', {
+    params: { page: page, limit: limit }
+  })
+    .then(response => {
+      dogs.value = response.data.data
+      const meta = response.data.meta
+      pagination.page = meta.current_page
+      pagination.rowsPerPage = meta.per_page
+      pagination.rowsNumber = meta.total
+      loading = false
+    })
+    .finally(() => {
+      loading = false
+    })
+}
+
+const onRequest = (props) => {
+  fetchDogs(props.pagination.page, props.pagination.rowsPerPage)
+}
+
+fetchDogs()
+const handleSelection = (selectedRows) => {
+  console.log(selectedRows)
+}
+
+</script>
 <template>
-    <div class="q-pa-md">
-      <q-table
-        title="Treats"
-        :rows="rows"
-        :columns="columns"
-        row-key="name"
-      >
-      <template v-slot:body-cell-actions="props">
-            <q-td :props="props">
-              <q-btn dense round flat color="grey"  icon="edit"></q-btn>
-              <q-btn dense round flat color="grey"  icon="delete"></q-btn>
-            </q-td>          
-          </template>
-    </q-table>
-    </div>
-  </template>
-  
-  <script>
-  const columns = [
-    {
-      name: 'name',
-      required: true,
-      label: 'Dessert (100g serving)',
-      align: 'left',
-      field: row => row.name,
-      format: val => `${val}`,
-      sortable: true
-    },
-    { name: 'calories', align: 'center', label: 'Calories', field: 'calories', sortable: true },
-    { name: 'fat', label: 'Fat (g)', field: 'fat', sortable: true },
-    { name: 'carbs', label: 'Carbs (g)', field: 'carbs' },
-    { name: 'protein', label: 'Protein (g)', field: 'protein' },
-    { name: 'sodium', label: 'Sodium (mg)', field: 'sodium' },
-    { name: 'calcium', label: 'Calcium (%)', field: 'calcium', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
-    { name: 'iron', label: 'Iron (%)', field: 'iron', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
-    { name: 'actions', label: 'Actions', field: 'actions' },
-  ]
-  
-  const rows = [
-    {
-      name: 'Frozen Yogurt',
-      calories: 159,
-      fat: 6.0,
-      carbs: 24,
-      protein: 4.0,
-      sodium: 87,
-      calcium: '14%',
-      iron: '1%'
-    },
-    {
-      name: 'Ice cream sandwich',
-      calories: 237,
-      fat: 9.0,
-      carbs: 37,
-      protein: 4.3,
-      sodium: 129,
-      calcium: '8%',
-      iron: '1%'
-    },
-    {
-      name: 'Eclair',
-      calories: 262,
-      fat: 16.0,
-      carbs: 23,
-      protein: 6.0,
-      sodium: 337,
-      calcium: '6%',
-      iron: '7%'
-    },
-    {
-      name: 'Cupcake',
-      calories: 305,
-      fat: 3.7,
-      carbs: 67,
-      protein: 4.3,
-      sodium: 413,
-      calcium: '3%',
-      iron: '8%'
-    },
-    {
-      name: 'Gingerbread',
-      calories: 356,
-      fat: 16.0,
-      carbs: 49,
-      protein: 3.9,
-      sodium: 327,
-      calcium: '7%',
-      iron: '16%'
-    },
-    {
-      name: 'Jelly bean',
-      calories: 375,
-      fat: 0.0,
-      carbs: 94,
-      protein: 0.0,
-      sodium: 50,
-      calcium: '0%',
-      iron: '0%'
-    },
-    {
-      name: 'Lollipop',
-      calories: 392,
-      fat: 0.2,
-      carbs: 98,
-      protein: 0,
-      sodium: 38,
-      calcium: '0%',
-      iron: '2%'
-    },
-    {
-      name: 'Honeycomb',
-      calories: 408,
-      fat: 3.2,
-      carbs: 87,
-      protein: 6.5,
-      sodium: 562,
-      calcium: '0%',
-      iron: '45%'
-    },
-    {
-      name: 'Donut',
-      calories: 452,
-      fat: 25.0,
-      carbs: 51,
-      protein: 4.9,
-      sodium: 326,
-      calcium: '2%',
-      iron: '22%'
-    },
-    {
-      name: 'KitKat',
-      calories: 518,
-      fat: 26.0,
-      carbs: 65,
-      protein: 7,
-      sodium: 54,
-      calcium: '12%',
-      iron: '6%'
-    }
-  ]
-  
-  export default {
-    setup () {
-      return {
-        columns,
-        rows
-      }
-    }
-  }
-  </script>
-  
+  <q-layout>
+
+    <q-page-container>
+      <q-page class="q-pa-xl">
+        <div class="q-my-lg">
+          <h6 class="">Test Table</h6>
+        </div>
+        <TableComponent title="Table" :rows="dogs" :columns="columns" headerclasses="bg-dark text-white"
+          :pagination="pagination" :onReuestFunction="onRequest" :loading="loading" :tablestripe="true" :flat="true"
+          :buttons="tableButtons" :buttonNames="['edit', 'delete']" :fullscreen="false"
+          :visible_columns="['age', 'name', 'edit', 'delete']" :bordered="true" card_class="" :hide_header="false"
+          :hide_bottom="false" selection="multiple" :dense="false" @selection-changed="handleSelection" />
+      </q-page>
+    </q-page-container>
+
+  </q-layout>
+</template>
+
+
+
+<style lang="scss" scoped></style>

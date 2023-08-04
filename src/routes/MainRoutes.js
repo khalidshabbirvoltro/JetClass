@@ -8,7 +8,7 @@ const MainRoutes=[
     {
         path:'/table',
         name:'Test',
-        component:Table
+        component:Test
     },
    
 
